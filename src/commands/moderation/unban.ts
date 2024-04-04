@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
   ApplicationCommandOptionType,
   Embed,
@@ -9,7 +9,7 @@ interface UnbanLocale {
   success: string;
 }
 
-export default new TaprisCommand<UnbanLocale>()
+export default new OmniversifyCommand<UnbanLocale>()
   .setName("unban")
   .setDescription("Unban selected user")
   .setOptions(
@@ -31,17 +31,17 @@ export default new TaprisCommand<UnbanLocale>()
     en: {
       success: "User got unbanned",
     },
-    ru: {
+    ar: {
       success: "User got unbanned",
     },
   })
   .setGuildOnly()
   .setRun(async (client, interaction, locale) => {
     const userId: string = interaction.options.find(
-      (option) => option.name == "id",
+      (option) => option.name === "id",
     )?.value;
     const reason: string | undefined = interaction.options.find(
-      (option) => option.name == "reason",
+      (option) => option.name === "reason",
     )?.value;
 
     await interaction.guild!.bans.remove(userId, reason);

@@ -6,6 +6,8 @@ export interface Env {
 
   SERVER_PORT: string;
   AUTHOR_ID: string;
+  COLOR_GREEN: string;
+  COLOR_RED: string;
 
   MODE: "production" | "development" | string;
 }
@@ -15,6 +17,8 @@ export async function getEnv(): Promise<Env> {
     ? Deno.env.toObject()
     : await load()) as unknown as Env;
 
+  if (!env.COLOR_GREEN) env.COLOR_GREEN = "#006233";
+  if (!env.COLOR_RED) env.COLOR_RED = "#c1272d";
   if (!env.BOT_COLOR) env.BOT_COLOR = "#97aee8";
   if (!env.AUTHOR_ID) env.AUTHOR_ID = "586128640136445964";
 

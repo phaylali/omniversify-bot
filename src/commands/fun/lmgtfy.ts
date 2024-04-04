@@ -1,6 +1,6 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ApplicationCommandOptionType,
   ButtonStyle,
   Embed,
@@ -11,7 +11,7 @@ interface LmgtfyLocale {
   getAnswerButton: (query: string) => string;
 }
 
-export default new TaprisCommand<LmgtfyLocale>()
+export default new OmniversifyCommand<LmgtfyLocale>()
   .setName("lmgtfy")
   .setDescription("'Let Me Google That For You' links generator")
   .setOptions({
@@ -24,13 +24,13 @@ export default new TaprisCommand<LmgtfyLocale>()
     en: {
       getAnswerButton: (query: string) => `Get answer for "${query}" question`,
     },
-    ru: {
-      getAnswerButton: (query: string) => `Получить ответ на вопрос "${query}"`,
+    ar: {
+      getAnswerButton: (query: string) => `ابحث عن جواب "${query}"`,
     },
   })
   .setRun((client, interaction, locale) => {
     const query = interaction.options.find(
-      (option) => option.name == "query",
+      (option) => option.name === "query",
     )?.value;
 
     const link = `https://lmgtfy.app/?q=${encodeURI(query.replace(/ /g, "+"))}`;
@@ -54,4 +54,4 @@ export default new TaprisCommand<LmgtfyLocale>()
 
     return interaction.reply({ embeds: [embed], components: [buttonsRow] });
   })
-  .disable();
+  ;

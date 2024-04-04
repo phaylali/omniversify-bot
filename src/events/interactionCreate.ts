@@ -1,10 +1,10 @@
-import { TaprisClient } from "@core/mod.ts";
-import { TaprisEvent } from "@framework/mod.ts";
-import { Embed, Interaction } from "harmony/mod.ts";
+import type { OmniversifyClient } from "@core/mod.ts";
+import { OmniversifyEvent } from "@framework/mod.ts";
+import { Embed, type Interaction } from "harmony/mod.ts";
 
-export default new TaprisEvent<"interactionCreate">()
+export default new OmniversifyEvent<"interactionCreate">()
   .setName("interactionCreate")
-  .setRun(async (client: TaprisClient, interaction: Interaction) => {
+  .setRun(async (client: OmniversifyClient, interaction: Interaction) => {
     if (interaction.isApplicationCommand()) {
       const command = client.commands.get(interaction.name);
 

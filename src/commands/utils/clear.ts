@@ -1,7 +1,7 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
   ApplicationCommandOptionType,
-  GuildTextChannel,
+  type GuildTextChannel,
   PermissionFlags,
 } from "harmony/mod.ts";
 
@@ -12,7 +12,7 @@ interface ClearLocale {
   deletedNMessages: (n: number) => string;
 }
 
-export default new TaprisCommand<ClearLocale>()
+export default new OmniversifyCommand<ClearLocale>()
   .setName("clear")
   .setDescription("Clear messages in chat")
   .setOptions({
@@ -29,17 +29,17 @@ export default new TaprisCommand<ClearLocale>()
       oldMessages: "I can't delete messages older than 14 days!",
       deletedNMessages: (n: number) => `Deleted ${n} messages!`,
     },
-    ru: {
-      bigRequest: "Я не могу удалять более 100 сообщений за раз!",
-      smallNumber: "Тебе нужно ввести число больше чем 1!",
-      oldMessages: "Я не могу удалять сообщения старше 14 дней!",
-      deletedNMessages: (n: number) => `Удалено ${n} сообщений!`,
+    ar: {
+      bigRequest: "لا أستطيع محو اكثر من 100 منشور!",
+      smallNumber: "يجب ان تكتب عدد اكثر من 1!",
+      oldMessages: "لا أستطيع محو رسائل اقدم من 14 يوم!",
+      deletedNMessages: (n: number) => `رسائل ${n} تم محوها!`,
     },
   })
   .setGuildOnly()
   .setRun(async (_client, interaction, locale) => {
     const amount: number = interaction.options.find(
-      (option) => option.name == "amount",
+      (option) => option.name === "amount",
     )?.value;
 
     const channel = interaction.channel as GuildTextChannel;

@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
   ApplicationCommandOptionType,
   Embed,
@@ -10,7 +10,7 @@ interface KickLocale {
   failure: (userTag: string) => string;
 }
 
-export default new TaprisCommand<KickLocale>()
+export default new OmniversifyCommand<KickLocale>()
   .setName("kick")
   .setDescription("Kick selected member")
   .setOptions(
@@ -33,18 +33,18 @@ export default new TaprisCommand<KickLocale>()
       success: (userTag: string) => `${userTag} got kicked`,
       failure: (userTag: string) => `You can't kick ${userTag}`,
     },
-    ru: {
-      success: (userTag: string) => `${userTag} был удалён`,
-      failure: (userTag: string) => `Вы не можете выгнать ${userTag}`,
+    ar: {
+      success: (userTag: string) => `${userTag} تم طرده`,
+      failure: (userTag: string) => `لا تستطيع طرد ${userTag}`,
     },
   })
   .setGuildOnly()
   .setRun(async (client, interaction, locale) => {
     const member = await interaction.guild?.members.fetch(
-      interaction.options.find((option) => option.name == "member")?.value,
+      interaction.options.find((option) => option.name === "member")?.value,
     );
     const reason: string | undefined = interaction.options.find(
-      (option) => option.name == "reason",
+      (option) => option.name === "reason",
     )?.value;
 
     if (!(await member!.kickable(interaction.member))) {

@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import { ApplicationCommandOptionType, Embed } from "harmony/mod.ts";
 
 interface HelpLocale {
@@ -7,7 +7,7 @@ interface HelpLocale {
   required: string;
 }
 
-export default new TaprisCommand<HelpLocale>()
+export default new OmniversifyCommand<HelpLocale>()
   .setName("help")
   .setDescription("Get info about commands")
   .setOptions({
@@ -24,18 +24,18 @@ export default new TaprisCommand<HelpLocale>()
         name ? `Server member: ${name}` : "List of my commands",
       required: "(required) ",
     },
-    ru: {
+    ar: {
       isNotAValidCommand: (request: string) =>
-        `Команда ${request} не существует!`,
+        ` ${request} طلب غير مقبول`,
       serverMember: (name?: string) =>
-        name ? `Участник сервера: ${name}` : "Список моих команд",
+        name ? `عضو السيرفر: ${name}` : "لائحة الطلبات",
 
-      required: "(обязателен) ",
+      required: "(مطلوب) ",
     },
   })
   .setRun((client, interaction, locale) => {
     const request: string = interaction.options.find(
-      (option) => option.name == "command",
+      (option) => option.name === "command",
     )?.value;
 
     if (request) {

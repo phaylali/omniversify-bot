@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import { ApplicationCommandOptionType, Embed } from "harmony/mod.ts";
 
 interface UserLocale {
@@ -6,7 +6,7 @@ interface UserLocale {
   bot: string;
 }
 
-export default new TaprisCommand<UserLocale>()
+export default new OmniversifyCommand<UserLocale>()
   .setName("user")
   .setDescription("Sends user information")
   .setOptions({
@@ -20,14 +20,14 @@ export default new TaprisCommand<UserLocale>()
       unknownError: "Unknown error happened! :(",
       bot: "`bot`",
     },
-    ru: {
-      unknownError: "Произошла неизвестная ошибка! :(",
-      bot: "`бот`",
+    ar: {
+      unknownError: "خطأ غير معروفة! :(",
+      bot: "`بوت`",
     },
   })
   .setRun(async (client, interaction, locale) => {
     const user = await client.users.get(
-      interaction.options.find((option) => option.name == "user")?.value,
+      interaction.options.find((option) => option.name === "user")?.value,
     );
 
     if (!user) {

@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import { Embed } from "harmony/mod.ts";
 
 type MemoryFormats = "Bytes" | "KiB" | "MiB" | "GiB" | "TiB" | "PiB";
@@ -25,7 +25,7 @@ interface InfoLocale {
   memoryUsage: string;
 }
 
-export default new TaprisCommand<InfoLocale>()
+export default new OmniversifyCommand<InfoLocale>()
   .setName("info")
   .setDescription("Get info about me")
   .setLocales({
@@ -37,13 +37,13 @@ export default new TaprisCommand<InfoLocale>()
       ping: "Ping",
       memoryUsage: "Memory usage",
     },
-    ru: {
-      embedTitle: "Информация обо мне",
-      description: "Многоязычный, многоцелевой бот для Discord",
-      amountOfGuilds: "Количество серверов",
-      author: "Автор",
-      ping: "Задержка",
-      memoryUsage: "Использование ОЗУ",
+    ar: {
+      embedTitle: "معلومات عني",
+      description: "متعدد اللغات، بوت ديسكورد متعدد التخصصات",
+      amountOfGuilds: "عدد الجماعات",
+      author: "الكاتب",
+      ping: "بينك",
+      memoryUsage: "استعمال الذاكرة",
     },
   })
   .setRun(async (client, interaction, locale) => {

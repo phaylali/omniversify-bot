@@ -1,15 +1,15 @@
-import { TaprisClient } from "@core/mod.ts";
-import { Interaction, MessageComponentInteraction } from "harmony/mod.ts";
+import type { OmniversifyClient } from "@core/mod.ts";
+import type { Interaction, MessageComponentInteraction } from "harmony/mod.ts";
 
 export type ComponentRun = (
-  client: TaprisClient,
+  client: OmniversifyClient,
   interaction: MessageComponentInteraction,
 ) => Promise<Interaction | void> | void;
 
 /**
- * Component builder used in Tapris
+ * Component builder used in Omniversify
  */
-export class TaprisComponent {
+export class OmniversifyComponent {
   customId!: RegExp;
   run!: ComponentRun;
 

@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
   ApplicationCommandOptionType,
   Embed,
@@ -10,7 +10,7 @@ interface BanLocale {
   failure: (userTag: string) => string;
 }
 
-export default new TaprisCommand<BanLocale>()
+export default new OmniversifyCommand<BanLocale>()
   .setName("ban")
   .setDescription("Ban selected member")
   .setOptions(
@@ -33,18 +33,18 @@ export default new TaprisCommand<BanLocale>()
       success: (userTag: string) => `${userTag} got banned`,
       failure: (userTag: string) => `You can't ban ${userTag}`,
     },
-    ru: {
-      success: (userTag: string) => `${userTag} был заблокирован`,
-      failure: (userTag: string) => `Вы не можете заблокировать ${userTag}`,
+    ar: {
+      success: (userTag: string) => `${userTag} تم حضره`,
+      failure: (userTag: string) => `لا تستطيع حظر ${userTag}`,
     },
   })
   .setGuildOnly()
   .setRun(async (client, interaction, locale) => {
     const member = await interaction.guild?.members.fetch(
-      interaction.options.find((option) => option.name == "member")?.value,
+      interaction.options.find((option) => option.name === "member")?.value,
     );
     const reason: string | undefined = interaction.options.find(
-      (option) => option.name == "reason",
+      (option) => option.name === "reason",
     )?.value;
 
     if (!(await member!.bannable(interaction.member))) {

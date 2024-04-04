@@ -1,24 +1,25 @@
 import { CommandsCollection } from "@commands/mod.ts";
 import { ComponentsCollection } from "@components/mod.ts";
 import { EventsCollection } from "@events/mod.ts";
-import { TaprisCommand, TaprisComponent, TaprisEvent } from "@framework/mod.ts";
-import { Env, TaprisDbClient } from "@utils/mod.ts";
-import { Client, Collection, GatewayIntents } from "harmony/mod.ts";
+import type { OmniversifyCommand, OmniversifyComponent, OmniversifyEvent } from "@framework/mod.ts";
+import { type Env, OmniversifyDbClient } from "@utils/mod.ts";
+import { Client, type Collection, GatewayIntents } from "harmony/mod.ts";
 
-export class TaprisClient extends Client {
-  public commands: Collection<string, TaprisCommand>;
-  public components: Collection<RegExp, TaprisComponent>;
-  public events: Collection<string, TaprisEvent>;
+export class OmniversifyClient extends Client {
+  public commands: Collection<string, OmniversifyCommand>;
+  public components: Collection<RegExp, OmniversifyComponent>;
+  public events: Collection<string, OmniversifyEvent>;
 
   public botColor: string;
-  public db: TaprisDbClient;
+  public botColor2: string;
+  public db: OmniversifyDbClient;
   public authorId: string;
 
   constructor(
     env: Env,
-    commands: TaprisCommand[],
-    events: TaprisEvent[],
-    components: TaprisComponent[]
+    commands: OmniversifyCommand[],
+    events: OmniversifyEvent[],
+    components: OmniversifyComponent[]
   ) {
     super();
 
@@ -26,7 +27,8 @@ export class TaprisClient extends Client {
     this.components = new ComponentsCollection(components);
     this.events = new EventsCollection(events);
 
-    this.botColor = env.BOT_COLOR;
+    this.botColor = env.COLOR_GREEN;
+    this.botColor2 = env.COLOR_RED;
     this.authorId = env.AUTHOR_ID;
 
     this.token = env.BOT_TOKEN;
@@ -36,7 +38,7 @@ export class TaprisClient extends Client {
       this.on(event.name, event.run.bind(null, this) as any)
     );
 
-    this.db = new TaprisDbClient();
+    this.db = new OmniversifyDbClient();
   }
 
   /**

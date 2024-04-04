@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import { GTR } from "gtr/mod.ts";
 import { ApplicationCommandOptionType, Embed } from "harmony/mod.ts";
 
@@ -11,7 +11,7 @@ interface TranslateLocale {
 
 const gtr = new GTR();
 
-export default new TaprisCommand<TranslateLocale>()
+export default new OmniversifyCommand<TranslateLocale>()
   .setName("translate")
   .setDescription("Translates text")
   .setOptions(
@@ -40,24 +40,24 @@ export default new TaprisCommand<TranslateLocale>()
       origLang: "Original language",
       origMessage: "Original message",
     },
-    ru: {
-      invalidLanguage: "Я не могу найти этот язык!",
-      textIn: (language: string) => `Текст на ${language} языке`,
-      origLang: "Язык оригинала",
-      origMessage: "Оригинальное сообщение",
+    ar: {
+      invalidLanguage: "خطأ، لغة غير صالحة!",
+      textIn: (language: string) => `كتابة بلغة ${language}`,
+      origLang: "اللغة الأصلية",
+      origMessage: "الرسالة الأصلية",
     },
   })
   .setRun(async (client, interaction, locale) => {
     const from: string = interaction.options.find(
-      (option) => option.name == "from",
+      (option) => option.name === "from",
     )?.value;
 
     const to: string = interaction.options.find(
-      (option) => option.name == "to",
+      (option) => option.name === "to",
     )?.value;
 
     const text: string = interaction.options.find(
-      (option) => option.name == "text",
+      (option) => option.name === "text",
     )?.value;
 
     try {

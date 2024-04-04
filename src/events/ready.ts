@@ -1,9 +1,9 @@
-import { TaprisClient } from "@core/mod.ts";
-import { TaprisEvent } from "@framework/mod.ts";
+import type { OmniversifyClient } from "@core/mod.ts";
+import { OmniversifyEvent } from "@framework/mod.ts";
 
-export default new TaprisEvent<"ready">()
+export default new OmniversifyEvent<"ready">()
   .setName("ready")
-  .setRun(async (client: TaprisClient) => {
+  .setRun(async (client: OmniversifyClient) => {
     await client.updatePresence();
 
     (await client.guilds.array()).forEach(async (guild) => {
@@ -16,4 +16,5 @@ export default new TaprisEvent<"ready">()
     );
 
     console.info(`${client.user!.tag} is up!`);
+
   });

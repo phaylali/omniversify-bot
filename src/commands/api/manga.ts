@@ -1,6 +1,6 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ApplicationCommandOptionType,
   ButtonStyle,
   Embed,
@@ -23,7 +23,7 @@ interface MangaLocales {
   readManga: string;
 }
 
-export default new TaprisCommand<MangaLocales>()
+export default new OmniversifyCommand<MangaLocales>()
   .setName("manga")
   .setDescription("Get data about manga")
   .setOptions({
@@ -38,15 +38,15 @@ export default new TaprisCommand<MangaLocales>()
       lastChapter: "Last chapter",
       readManga: "Read manga",
     },
-    ru: {
-      mangaNotFound: "Извините! Манга не найдена! :(",
-      lastChapter: "Последняя глава",
-      readManga: "Читать мангу",
+    ar: {
+      mangaNotFound: "لاتوجد هذه المانكا :(",
+      lastChapter: "اخر جزء",
+      readManga: "اقرأ المانكا",
     },
   })
   .setRun(async (client, interaction, locale) => {
     const query = interaction.options.find(
-      (option) => option.name == "query",
+      (option) => option.name === "query",
     )?.value;
 
     const res: SearchResult[] = await ky

@@ -1,5 +1,5 @@
-import { TaprisClient } from "@core/mod.ts";
-import {
+import type { OmniversifyClient } from "@core/mod.ts";
+import type {
   ApplicationCommandInteraction,
   ClientEvents,
   Interaction,
@@ -10,7 +10,7 @@ export type EventName = keyof ClientEvents;
 export type EventArgs<T extends EventName> = ClientEvents[T];
 
 export type EventRun<T extends EventName> = (
-  client: TaprisClient,
+  client: OmniversifyClient,
   ...args: EventArgs<T>
 ) =>
   | Promise<
@@ -21,9 +21,9 @@ export type EventRun<T extends EventName> = (
   | void;
 
 /**
- * Event builder used in Tapris
+ * Event builder used in Omniversify
  */
-export class TaprisEvent<T extends EventName = EventName> {
+export class OmniversifyEvent<T extends EventName = EventName> {
   name!: T;
   run!: EventRun<T>;
 

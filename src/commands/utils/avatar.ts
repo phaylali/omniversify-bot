@@ -1,6 +1,6 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ApplicationCommandOptionType,
   ButtonStyle,
   Embed,
@@ -13,7 +13,7 @@ interface AvatarLocale {
   link: string;
 }
 
-export default new TaprisCommand<AvatarLocale>()
+export default new OmniversifyCommand<AvatarLocale>()
   .setName("avatar")
   .setDescription("Get someones avatar")
   .setOptions({
@@ -28,15 +28,15 @@ export default new TaprisCommand<AvatarLocale>()
       usersAvatar: (user: string) => `${user}'s avatar`,
       link: "Link to avatar",
     },
-    ru: {
-      unknownError: "Произошла неизвестная ошибка! :(",
-      usersAvatar: (user: string) => `Аватар ${user}`,
-      link: "Ссылка",
+    ar: {
+      unknownError: "خطأ غير معروف! :(",
+      usersAvatar: (user: string) => `الصورة الرمزية ${user}`,
+      link: "رابط للصورة الرمزية",
     },
   })
   .setRun(async (client, interaction, locale) => {
     const user = await client.users.get(
-      interaction.options.find((option) => option.name == "user")?.value,
+      interaction.options.find((option) => option.name === "user")?.value,
     );
 
     if (!user) {

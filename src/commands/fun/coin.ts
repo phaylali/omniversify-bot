@@ -1,5 +1,5 @@
-import { TaprisCommand } from "@framework/mod.ts";
-import { ApplicationCommandOptionType, Embed } from "harmony/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
+import { type ActionRowComponent, ApplicationCommandOptionType, Embed, MessageComponentType } from "harmony/mod.ts";
 
 type Choice = "coin" | "tail";
 
@@ -10,7 +10,7 @@ interface coinLocale {
   youWonLost: (winOrNot: boolean) => string;
 }
 
-export default new TaprisCommand<coinLocale>()
+export default new OmniversifyCommand<coinLocale>()
   .setName("coin")
   .setDescription("Flip a coin")
   .setOptions({
@@ -26,28 +26,49 @@ export default new TaprisCommand<coinLocale>()
   .setLocales({
     en: {
       winner: (choice: Choice) =>
-        `Got ${choice == choices[0] ? "coin" : "tail"}`,
+        `Got ${choice === choices[0] ? "coin" : "tail"}`,
       youWonLost: (winOrNot: boolean) =>
-        winOrNot ? "You won!" : "You lost! :(",
+        winOrNot ? "GG Copium" : "You Fucking Loser!",
     },
-    ru: {
+    ar: {
       winner: (choice: Choice) =>
-        choice == choices[0] ? "Выпал орёл" : "Выпала решка",
+        choice === choices[0] ? "راس" : "تريا",
       youWonLost: (winOrNot: boolean) =>
-        winOrNot ? "Вы выиграли! :D" : "Вы проиграли! :(",
+        winOrNot ? "بصحا, يلاه حسب الدروج" : "قودتيها",
     },
   })
+
   .setRun((client, interaction, locale) => {
     const choice = interaction.options.find(
-      (option) => option.name == "choice",
+      (option) => option.name === "choice",
     )?.value;
 
     const winner: Choice = choices[Math.floor(Math.random() * 2)];
 
     const embed = new Embed()
       .setTitle(locale.winner(winner))
-      .setColor(client.botColor)
-      .setDescription(locale.youWonLost(winner == choice));
+      .setColor(winner === choice ? client.botColor : client.botColor2)
+      .setDescription(locale.youWonLost(winner === choice))
+      .setImage(winner === choice ? "https://i.imgur.com/onRIi79.jpeg":"https://i.imgur.com/4PPZu9Z.jpeg");
 
-    return interaction.reply({ embeds: [embed] });
-  });
+      const buttonsRow: ActionRowComponent = {
+        type: MessageComponentType.ACTION_ROW,
+        components: [
+          {
+            type: MessageComponentType.BUTTON,
+            customID: `flip_coin_${choices[0]}`,
+            label: `Select ${choices[0]}`,
+            style: 1,
+          },
+          {
+            type: MessageComponentType.BUTTON,
+            customID: `flip_coin_${choices[1]}`,
+            label: `Select ${choices[1]}`,
+            style: 1,
+          },
+        ],
+      };
+
+    return interaction.reply({ embeds: [embed],components:[buttonsRow] });
+  })
+

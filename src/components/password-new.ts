@@ -1,14 +1,14 @@
 import { commandLocales } from "@commands/utils/password.ts";
-import { TaprisComponent } from "@framework/mod.ts";
+import { OmniversifyComponent } from "@framework/mod.ts";
 import { generatePassword } from "@utils/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ButtonStyle,
   Embed,
   MessageComponentType,
 } from "harmony/mod.ts";
 
-export default new TaprisComponent()
+export default new OmniversifyComponent()
   .setCustomId(/password_(\d+)/)
   .setRun(async (client, interaction) => {
     await interaction.defer();

@@ -1,6 +1,6 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ApplicationCommandOptionType,
   ButtonStyle,
   Embed,
@@ -32,7 +32,7 @@ interface TracemoeLocales {
   watch: string;
 }
 
-export default new TaprisCommand<TracemoeLocales>()
+export default new OmniversifyCommand<TracemoeLocales>()
   .setName("tracemoe")
   .setDescription("Get exact moment and the episode for screenshot from anime")
   .setOptions({
@@ -48,16 +48,16 @@ export default new TaprisCommand<TracemoeLocales>()
       episode: "Episode",
       watch: "Watch",
     },
-    ru: {
-      frameNotFound: "Извините, я не могу найти этот кадр",
-      similarity: "Схожести",
-      episode: "Эпизод",
-      watch: "Смотреть",
+    ar: {
+      frameNotFound: "للاسف لا يمكن ايجاد هذه اللقطة",
+      similarity: "تشبيه",
+      episode: "حلقة",
+      watch: "شاهد",
     },
   })
   .setRun(async (client, interaction, locale) => {
     const url = interaction.options.find(
-      (option) => option.name == "url",
+      (option) => option.name === "url",
     )?.value;
 
     await interaction.defer();

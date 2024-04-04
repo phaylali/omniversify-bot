@@ -1,10 +1,10 @@
-import { TaprisClient } from "@core/mod.ts";
-import { TaprisEvent } from "@framework/mod.ts";
-import { Embed, Guild } from "harmony/mod.ts";
+import type { OmniversifyClient } from "@core/mod.ts";
+import { OmniversifyEvent } from "@framework/mod.ts";
+import { Embed, type Guild } from "harmony/mod.ts";
 
-export default new TaprisEvent<"guildCreate">()
+export default new OmniversifyEvent<"guildCreate">()
   .setName("guildCreate")
-  .setRun(async (client: TaprisClient, guild: Guild) => {
+  .setRun(async (client: OmniversifyClient, guild: Guild) => {
     await client.db.registerGuild(guild.id);
     await client.updatePresence();
 
@@ -18,7 +18,7 @@ export default new TaprisEvent<"guildCreate">()
       .setThumbnail(client.user.avatarURL())
       .setDescription(
         `Type "/" to check bot commands!
-         https://github.com/tapris-bot/tapris.`,
+         https://github.com/phaylali/Omniversify-bot.`,
       );
 
     return channel.send({

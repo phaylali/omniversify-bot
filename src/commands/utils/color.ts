@@ -1,4 +1,4 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import { createCanvas } from "canvas/mod.ts";
 import {
   ApplicationCommandOptionType,
@@ -6,7 +6,7 @@ import {
   MessageAttachment,
 } from "harmony/mod.ts";
 
-export default new TaprisCommand()
+export default new OmniversifyCommand()
   .setName("color")
   .setDescription("Shows color or generates color")
   .setOptions({
@@ -19,7 +19,7 @@ export default new TaprisCommand()
     await interaction.defer();
 
     let colorString: string = interaction.options.find(
-      (option) => option.name == "string",
+      (option) => option.name === "string",
     )?.value;
 
     if (!colorString) {

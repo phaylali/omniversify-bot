@@ -1,7 +1,7 @@
-import { LocaleNames, TaprisCommand } from "@framework/mod.ts";
+import { type LocaleNames, OmniversifyCommand } from "@framework/mod.ts";
 import { generatePassword } from "@utils/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ApplicationCommandOptionType,
   Embed,
   MessageComponentType,
@@ -12,7 +12,7 @@ interface PasswordLocale {
   delete: string;
 }
 
-const command = new TaprisCommand<PasswordLocale>()
+const command = new OmniversifyCommand<PasswordLocale>()
   .setName("password")
   .setDescription("Password generator")
   .setOptions({
@@ -26,14 +26,14 @@ const command = new TaprisCommand<PasswordLocale>()
       createNew: "Create new",
       delete: "Delete",
     },
-    ru: {
-      createNew: "Создать новый",
-      delete: "Удалить",
+    ar: {
+      createNew: "اخلق الجديد",
+      delete: "امحي",
     },
   })
   .setRun((client, interaction, locale) => {
     const passwordLength: number = interaction.options.find(
-      (option) => option.name == "length",
+      (option) => option.name === "length",
     )?.value;
 
     const buttonsRow: ActionRowComponent = {

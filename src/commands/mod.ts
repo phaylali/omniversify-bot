@@ -16,15 +16,16 @@ import profileLink from "@commands/utils/profileLink.ts";
 import setLanguage from "@commands/utils/setLanguage.ts";
 import translate from "@commands/utils/translate.ts";
 import user from "@commands/utils/user.ts";
-import { TaprisCommand } from "@framework/mod.ts";
+import type { OmniversifyCommand } from "@framework/mod.ts";
 import { Collection } from "harmony/mod.ts";
+import live from "@commands/fun/live.ts";
 
 export const commands = [
   genshinCodes,
   manga,
   coin,
   tracemoe,
-  lmgtfy,
+  live,
   help,
   info,
   ban,
@@ -38,21 +39,24 @@ export const commands = [
   setLanguage,
   translate,
   user,
+
+
 ];
 
 /**
  * Create a collection of commands
  */
-export class CommandsCollection extends Collection<string, TaprisCommand> {
+export class CommandsCollection extends Collection<string, OmniversifyCommand> {
   /**
    * Create a collection of commands
    * @param commands array of commands to set to collection
    */
-  constructor(commands: TaprisCommand[]) {
+  constructor(commands: OmniversifyCommand[]) {
     super();
 
     commands
       .filter((command) => !command.disabled)
       .forEach((command) => this.set(command.name, command));
+
   }
 }

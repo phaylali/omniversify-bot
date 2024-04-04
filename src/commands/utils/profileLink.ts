@@ -1,11 +1,11 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import { ApplicationCommandOptionType, Embed } from "harmony/mod.ts";
 
 interface ProfileLinkLocale {
   unknownError: string;
 }
 
-export default new TaprisCommand<ProfileLinkLocale>()
+export default new OmniversifyCommand<ProfileLinkLocale>()
   .setName("profilelink")
   .setDescription("Get link to share user using link")
   .setOptions({
@@ -18,13 +18,13 @@ export default new TaprisCommand<ProfileLinkLocale>()
     en: {
       unknownError: "Unknown error happened! :(",
     },
-    ru: {
-      unknownError: "Произошла неизвестная ошибка! :(",
+    ar: {
+      unknownError: "خطأ غير معروف! :(",
     },
   })
   .setRun(async (client, interaction, locale) => {
     const user = await client.users.get(
-      interaction.options.find((option) => option.name == "user")?.value,
+      interaction.options.find((option) => option.name === "user")?.value,
     );
 
     if (!user) {

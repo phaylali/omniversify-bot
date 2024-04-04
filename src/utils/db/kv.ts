@@ -1,19 +1,19 @@
-import { LocaleNames } from "@framework/mod.ts";
+import type { LocaleNames } from "@framework/mod.ts";
 
 class Guild {
   public language: LocaleNames = "en";
 }
 
 /**
- * Db client for tapris using Deno KV
+ * Db client for Omniversify using Deno KV
  */
-export class TaprisDbClient {
+export class OmniversifyDbClient {
   private kv!: Deno.Kv;
 
   /**
    * Open Deno KV connection
    */
-  public async connect(): Promise<TaprisDbClient> {
+  public async connect(): Promise<OmniversifyDbClient> {
     this.kv = await Deno.openKv();
 
     return this;
@@ -73,7 +73,7 @@ export class TaprisDbClient {
    * Inserts new guild into db
    * @param id Id of new guild
    */
-  public async registerGuild(id: string): Promise<TaprisDbClient> {
+  public async registerGuild(id: string): Promise<OmniversifyDbClient> {
     await this.kv.set(["guilds", id], new Guild());
 
     return this;
@@ -83,7 +83,7 @@ export class TaprisDbClient {
    * Removes guild from db
    * @param id Id of guild to remove
    */
-  public async removeGuild(id: string): Promise<TaprisDbClient> {
+  public async removeGuild(id: string): Promise<OmniversifyDbClient> {
     await this.kv.delete(["guilds", id]);
 
     return this;

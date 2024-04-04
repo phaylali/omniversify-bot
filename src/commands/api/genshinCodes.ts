@@ -1,6 +1,6 @@
-import { TaprisCommand } from "@framework/mod.ts";
+import { OmniversifyCommand } from "@framework/mod.ts";
 import {
-  ActionRowComponent,
+  type ActionRowComponent,
   ButtonStyle,
   Embed,
   MessageComponentType,
@@ -8,28 +8,19 @@ import {
 import ky from "ky";
 
 const ACTIVATE_GIFT_URL = "https://genshin.hoyoverse.com/en/gift";
-const API_URL =
-  "https://raw.githubusercontent.com/ataraxyaffliction/gipn-json/main/gipn.json";
+const API_URL = "https://genshin-code.mchang.workers.dev/";
+// biome-ignore lint/style/useConst: <explanation>
 
+export interface Code {
+  code: string;
+  description: string;
+  discovery: string;
+  link: string;
+}
 export interface CodesResponse {
   CODES: Code[];
 }
-
-export interface Code {
-  reward: string;
-  date: string;
-  code: string;
-  is_expired: boolean;
-  region: number;
-  reward_array: RewardArray[];
-}
-
-export interface RewardArray {
-  image_path: string;
-  name: string;
-  count: string;
-  rarity: string;
-}
+export interface getPromotionsResponse extends Array<Code> {}
 
 interface GenshinCodesLocale {
   activateButton: string;
@@ -37,24 +28,25 @@ interface GenshinCodesLocale {
   description: string;
 }
 
-export default new TaprisCommand<GenshinCodesLocale>()
+export default new OmniversifyCommand<GenshinCodesLocale>()
   .setName("genshincodes")
   .setDescription("Get valid codes for Genshin Impact")
   .setLocales({
     en: {
       activateButton: "Activate",
       embedTitle: "Codes for Genshin Impact",
-      description: "You can activate them in game, and get rewards!",
+      description: "NA, EU & Asia codes",
     },
-    ru: {
-      activateButton: "Активировать",
-      embedTitle: "Промокоды для Genshin Impact",
-      description: "Вы можете активировать их в игре и получить награды!",
+    ar: {
+      activateButton: "تفعيل",
+      embedTitle: "كودات گنشن امپاكت",
+      description: "كودات امريكا الشمالية، اسيا واوروبا",
     },
   })
-  .disable()
+
   .setRun(async (client, interaction, locale) => {
-    const res: CodesResponse = await ky.get(API_URL).json();
+
+    const res = await ky.get(API_URL).json();
 
     const embed = new Embed()
       .setColor(client.botColor)
@@ -62,17 +54,18 @@ export default new TaprisCommand<GenshinCodesLocale>()
       .setDescription(locale.description)
       .setURL(ACTIVATE_GIFT_URL);
 
-    res.CODES.forEach((code: Code) => {
-      if (!code.is_expired) {
-        embed.addField(
-          code.code,
-          code.reward_array
-            .map((reward) => `${reward.count} ${reward.name}`)
-            .join("\n"),
-          true,
-        );
-      }
+    const withoutLast2 = res.slice(0, -2);
+
+
+
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    withoutLast2.forEach((code: Code) => {
+      embed.addField(
+        code.code,
+        code.link,true
+      );
     });
+    //console.log(res[0])
 
     const buttonsRow: ActionRowComponent = {
       type: MessageComponentType.ACTION_ROW,

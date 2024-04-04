@@ -1,23 +1,23 @@
-import { TaprisClient } from "@core/mod.ts";
-import {
+import type { OmniversifyClient } from "@core/mod.ts";
+import type {
   ApplicationCommandInteraction,
   ApplicationCommandOption,
   PermissionResolvable,
   SlashCommandInteraction,
 } from "harmony/mod.ts";
 
-export type LocaleNames = "en" | "ru";
+export type LocaleNames = "en" | "ar";
 
 export type CommandRun<T> = (
-  client: TaprisClient,
+  client: OmniversifyClient,
   interaction: SlashCommandInteraction,
   locale: T,
 ) => Promise<ApplicationCommandInteraction | undefined>;
 
 /**
- * Locale-aware command builder used in Tapris
+ * Locale-aware command builder used in Omniversify
  */
-export class TaprisCommand<T = undefined> {
+export class OmniversifyCommand<T = undefined> {
   name!: string;
   description!: string;
   options: ApplicationCommandOption[] = [];
@@ -32,7 +32,7 @@ export class TaprisCommand<T = undefined> {
    * @param name name of new command
    * @returns this
    */
-  public setName(name: string): TaprisCommand<T> {
+  public setName(name: string): OmniversifyCommand<T> {
     this.name = name;
 
     return this;
@@ -43,7 +43,7 @@ export class TaprisCommand<T = undefined> {
    * @param description description of new command
    * @returns this
    */
-  public setDescription(description: string): TaprisCommand<T> {
+  public setDescription(description: string): OmniversifyCommand<T> {
     this.description = description;
 
     return this;
@@ -54,7 +54,7 @@ export class TaprisCommand<T = undefined> {
    * @param options Array of options to set
    * @returns this
    */
-  public setOptions(...options: ApplicationCommandOption[]): TaprisCommand<T> {
+  public setOptions(...options: ApplicationCommandOption[]): OmniversifyCommand<T> {
     this.options = options;
 
     return this;
@@ -65,7 +65,7 @@ export class TaprisCommand<T = undefined> {
    * @param option Option to add
    * @returns this
    */
-  public addOption(option: ApplicationCommandOption): TaprisCommand<T> {
+  public addOption(option: ApplicationCommandOption): OmniversifyCommand<T> {
     this.options = [...this.options, option];
 
     return this;
@@ -87,7 +87,7 @@ export class TaprisCommand<T = undefined> {
    * @param locales Locales for command
    * @returns this
    */
-  public setLocales(locales: Record<LocaleNames, T>): TaprisCommand<T> {
+  public setLocales(locales: Record<LocaleNames, T>): OmniversifyCommand<T> {
     this.locales = locales;
 
     return this;
@@ -98,7 +98,7 @@ export class TaprisCommand<T = undefined> {
    * @param guildOnly true by default
    * @returns this
    */
-  public setGuildOnly(guildOnly = true): TaprisCommand<T> {
+  public setGuildOnly(guildOnly = true): OmniversifyCommand<T> {
     this.guildOnly = guildOnly;
 
     return this;
@@ -111,7 +111,7 @@ export class TaprisCommand<T = undefined> {
    */
   public setMemberPermissions(
     memberPermissions: PermissionResolvable,
-  ): TaprisCommand<T> {
+  ): OmniversifyCommand<T> {
     this.memberPermissions = memberPermissions;
 
     return this;
